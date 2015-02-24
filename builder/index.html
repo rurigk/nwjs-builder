@@ -1,0 +1,63 @@
+<html>
+<head>
+    <meta charset='Utf-8'>
+    <title>nwjs builder</title>
+    <link rel="stylesheet" type="text/css" href="builder.css">
+    <script type='text/javascript' src='builder.js'></script>
+</head>
+<body class='bz'>
+    <div style='display: none;'>
+        <input type='file' id='folder' accept=".json">
+    </div>
+    <div class='windowcontrolls bz nosel'>
+        nwjs builder 0.1
+        <div class='controlls'>
+            <div class='l minwindow bz'>_</div>
+            <div class='l maxwindow bz'>[]</div>
+            <div class='l closewindow bz'>X</div>
+        </div>
+    </div>
+    <div class='main'>
+        <div class='actions bz nosel'>
+            <div class='l openfolder button bz'>Open project</div>
+            <div class='l button bz' id='runproject' disabled='disabled'>Run project</div>
+            <div class='r'>
+                <span class='l' style='padding: 7px;'>nw.js version</span>
+                <select id="nwversion" class='l'>
+                </select>
+                <div class='r button bz' id='build' disabled='disabled'>Build project</div>
+            </div>
+        </div>
+        <div class='cnt'>
+            <div class='projectinf bz'>
+                <b>nw.js platform:</b><span id='pak-nwjsplatform'></span><br>
+                <b>nw.js arch:</b><span id='pak-nwjsarch'></span><br>
+                <b>nw.js path:</b><span id='pak-nwpath'></span><br>
+                <b>nw.js version:</b><span id='pak-nwjsversion'></span><br>
+                <b>Project path:</b><span id='pak-projectpath'></span><br>
+                <b>App name:</b><span id='pak-appname'></span><br>
+                <b>Description:</b><span id='pak-appdesc'></span><br>
+                <b>Version:</b><span id='pak-appversion'></span><br>
+                <b>Keywords:</b><span></span><br>
+                <b>Target dir:</b><span id='pak-targetdir'></span>
+            </div>
+            <div class='console'>
+                <div class='info bz'>
+                    <div class='l' id='clearconsole'>Clear console</div>
+                    <div class='r'>
+                        <div class='l' id='stdoutcount'>0 Messages</div>
+                        <div class='l' id='stderrcount'>0 Errors</div>
+                    </div>
+                </div>
+                <div class='bz' id='console'></div>
+            </div>
+        </div>
+        <div class='lockapp' id='lockapp'>
+            <div class='d-block progress-block bz'>
+                Downloading nwjs <span id='nwversion-dl'></span>
+                <div class='progress'><div class='bar' id='dlprog'></div></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

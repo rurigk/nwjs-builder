@@ -1,0 +1,152 @@
+.l{float: left;}
+.r{float: right;}
+.bz{box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;-o-box-sizing: border-box;}
+.nosel{-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;cursor: default;}
+body{
+    margin: 0px;
+    border: 4px solid #002d3b;
+    font-family: sans-serif;
+}
+.windowcontrolls{
+    position: absolute;
+    top: 4px;
+    left: 0px;
+    background: #002d3b;
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    font-weight:bold;
+    color: #FFF;
+    padding-top: 9px;
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+}
+.controlls{
+    -webkit-app-region: no-drag;
+    position: absolute;
+    right: 4px;
+    top: 0px;
+}
+.minwindow,.maxwindow,.closewindow{
+    width: 36px;
+    height: 36px;
+    padding: 10px;
+}
+.minwindow:hover,.maxwindow:hover,.closewindow:hover{
+    background-color: rgba(255,255,255,0.2);
+}
+.main{
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    top: 44px;
+    bottom: 4px;
+}
+.main .actions{
+    padding: 4px 2px 4px 2px;
+    width: 100%;
+    height: 40px;
+    background-color: #DDD;
+}
+.main .actions .button{
+    padding: 6px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    background: linear-gradient(#FFF, #EAEAEA);
+    margin-right: 2px;
+    margin-left: 2px;
+    cursor: pointer;
+}
+.main .actions .button[disabled='disabled']{
+    color: #777;
+    cursor: default;
+}
+#nwversion{
+    border: 1px solid #CCC;
+    background: linear-gradient(#FFF, #EAEAEA);
+    height: 32px;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-right: 2px;
+}
+
+.cnt{
+    position: absolute;
+    top: 40px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+.cnt .console{
+    position: absolute;
+    border-top: 1px solid #AAA;
+    background: #DDD;
+    height: 40%;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+.cnt .console .info{
+    padding: 5px;
+    overflow: hidden;
+    border-bottom: 1px solid #AAA;
+}
+#stdoutcount{color: #006e9d;margin-left: 10px;}
+#stderrcount{color: #F00;margin-left: 10px;}
+.projectinf{
+    padding: 15px;
+    font-size: 18px;
+    color: #333;
+}
+.projectinf span{color: #777;}
+#console{
+    position: absolute;
+    width: 100%;
+    top: 28px;
+    bottom: 0px;
+    overflow: auto;
+    padding: 5px;
+}
+#clearconsole{color: #555;cursor: pointer;}
+.lockapp{
+    display: none;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: #FFF;
+}
+.d-block{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+}
+.progress-block{
+    width: 460px;
+    height: 120px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.2 );
+    text-align: center;
+    padding: 25px;
+    font-size: 20px;
+}
+.progress-block .progress{
+    position: relative;
+    margin-top: 15px;
+    border-radius: 20px;
+    width: 100%;
+    height: 20px;
+    background-color: #DDD;
+    overflow: hidden;
+}
+.progress-block .progress .bar{
+    border-radius: 20px;
+    width: 0%;
+    height: 100%;
+    background-color: #0AD;
+}
