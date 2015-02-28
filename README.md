@@ -6,8 +6,11 @@ Build a nwjs project more easy
 ##this is alpha
 
 Added new version v0.12.0-rc1
+
 Changed the structure versions.json
+
 Dialogos added in construction
+
 Some elements of ui repaired
 
 ##Only works on linux
