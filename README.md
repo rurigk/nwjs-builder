@@ -4,6 +4,7 @@
 Build a nwjs project more easy
 
 ##this is alpha
+![nwjsbuilder](http://www.nomowi.com/nwjsbuilder6.png "nwjsbuilder")
 
 Added new version v0.12.0-rc1
 
