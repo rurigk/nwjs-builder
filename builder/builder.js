@@ -69,7 +69,7 @@ window.addEventListener("load",function(){
     app.vinput=getID('nwversion');
     showVersionsSelect();
     app.vinput.addEventListener('change',function(){
-        build.version=app.buildpackages.versions[parseInt(app.vinput.value)][0];
+        build.version=app.buildpackages.versions[parseInt(app.vinput.value)];
         updateState();
     })
     window.addEventListener("click",function(e){
@@ -118,9 +118,10 @@ window.addEventListener("load",function(){
     });
 });
 function runApp(v,pkg){
+    dirbin=path.basename(genDL(build.version,os.type(),os.arch(),true));
     build.runing=true;
     updateState();
-    cxmd="builder/bin/"+fvd(build.version)+"/nw '"+app.workdir+"/'";
+    cxmd="builder/bin/"+dirbin+"/nw '"+app.workdir+"/'";
     _console.dom.innerHTML+="<span style='color: #2082ac;'>=======<br>Run app<br>=======<br><br>"+cxmd+"</span><br><br>";
     child=exec(cxmd);
     build.pids.push(child.pid);
@@ -131,20 +132,18 @@ function runApp(v,pkg){
         build.pids.splice(build.pids.indexOf(this.pid),1)
     })
     child.stdout.on('data',function(data){
-        data=data.replace(/\n/g,'<br>');
-        _console.dom.innerHTML+="<span style='color: #555;'>"+data+"</span>";
-        _console.msgc++;
-        msgc.innerHTML=_console.msgc+" Messages";
+        consoleAddMsg(data);
     })
     child.stderr.on('data',function(data){
-        data=data.replace(/\n/g,'<br>');
-        _console.dom.innerHTML+="<span style='color: #ff3a3a;'>"+data+"</span>";
-        _console.errc++;
-        errc.innerHTML=_console.errc+" Errors";
+        consoleAddErr(data);
     })
 }
 function buildApp(){
+    build.runing=true;
+    updateState();
     if(app.workdir == ''){return false;}
+    consoleAddMsg("<span style='color: #2082ac;'>=======<br>Build start<br>=======<br><br></span>");
+    consoleAddMsg("Copying project files<br>");
     if(!fs.existsSync(app.workdir+'/.build')){
         fs.mkdirSync(app.workdir+'/.build');
         copyFiles();
@@ -160,18 +159,25 @@ function copyFiles(){
     fs.copySync(app.workdir+'/package.json',app.workdir+'/.build/package.json');
     fs.copy(app.workdir+'/'+namef, app.workdir+'/.build/'+namef, function(err) {
         if(err){
-            return console.error(err);
+            consoleAddErr("Error when copying files<br>");
+            consoleAddErr(err+"<br>");
+            return false;
         }
         if(fs.existsSync(app.workdir+'/node_modules')){
+            consoleAddMsg("Copying npm modules<br>");
             fs.copy(app.workdir+'/node_modules', app.workdir+'/.build/node_modules', function(err) {
                 if(err){
-                    return console.error(err);
+                    consoleAddErr("Error when copying npm modules<br>");
+                    consoleAddErr(err+"<br>");
+                    return false;
                 }
+                consoleAddMsg("Packaging files to data.nw<br>");
                 exec('cd "'+app.workdir+'/.build" && zip -r "'+app.workdir+'/data.nw" *', function(error, stdout, stderr){
                     mergeFiles();
                 });
             })
         }else{
+            consoleAddMsg("Packaging files to data.nw<br>");
             exec('cd "'+app.workdir+'/.build" && zip -r "'+app.workdir+'/data.nw" *', function(error, stdout, stderr){
                 mergeFiles();
             });
@@ -180,14 +186,23 @@ function copyFiles(){
 }
 //Merge files nw and data.nw to app
 function mergeFiles(){
+    consoleAddMsg("Merge binary file with data.nw<br>");
+    dirbin=path.basename(genDL(build.version,os.type(),os.arch(),true));
     if(!fs.existsSync(app.workdir+"/build/")){
         fs.mkdirSync(app.workdir+"/build/");
     }
-    cxmd="cat 'builder/bin/"+fvd(build.version)+"/nw' '"+app.workdir+"/data.nw' > '"+app.workdir+"/build/app' && chmod +x '"+app.workdir+"/build/app' && rm -rf '"+app.workdir+"/.build/' ";
-    exec(cxmd, function(error, stdout, stderr){
-        fs.copySync("builder/bin/"+fvd(build.version),app.workdir+'/build/');
+    cxmd="cat 'builder/bin/"+dirbin+"/nw' '"+app.workdir+"/data.nw' > '"+app.workdir+"/build/app' && chmod +x '"+app.workdir+"/build/app' ";
+    ex=exec(cxmd, function(error, stdout, stderr){
+        if(error){consoleAddErr(error+"<br>");return false;}
+        if(stderr){consoleAddErr(stderr+"<br>");return false;}
+        fs.copySync("builder/bin/"+dirbin,app.workdir+'/build/');
+        consoleAddMsg("Removing unnecessary files<br>");
+        fs.removeSync(app.workdir+'/.build/');
         fs.removeSync(app.workdir+'/build/nw');
         fs.removeSync(app.workdir+'/data.nw');
+        consoleAddMsg("<span style='color: #2082ac;'>=======<br>Build complete<br>=======<br><br></span>");
+        build.runing=false;
+        updateState();
     });
 }
 //Update info in DOM
@@ -199,42 +214,45 @@ function updateFields(){
     getID('pak-targetdir').innerHTML=app.workdir+'/build/';
 }
 function updateState(){
+    dirbin=path.basename(genDL(build.version,os.type(),os.arch(),true));
     getID('pak-nwjsversion').innerHTML=build.version;
-    getID('pak-nwpath').innerHTML=(fvd(build.version) != false)? process.cwd()+'builder/bin/'+fvd(build.version):"";
-    if((!build.runing || app.package["single-instance"] == false) && build.version != "" && app.workdir != "" && fs.existsSync('builder/bin/'+fvd(build.version))){
+    getID('pak-nwpath').innerHTML=(dirbin != false)? process.cwd()+'builder/bin/'+dirbin:"";
+    if((!build.runing || app.package["single-instance"] == false) && build.version != "" && app.workdir != "" && fs.existsSync('builder/bin/'+dirbin)){
         getID('runproject').setAttribute('disabled','false');
         getID('build').setAttribute('disabled','false');
     }else{
         getID('runproject').setAttribute('disabled','disabled');
         getID('build').setAttribute('disabled','disabled');
     }
-    if(!fs.existsSync('builder/bin/'+fvd(build.version)) && !isNaN(app.vinput.value)){
+    if(!build.runing){
+        getID('nwversion').disabled=false;
+    }else{
+        getID('nwversion').disabled=true;
+    }
+    if(!fs.existsSync('builder/bin/'+dirbin) && !isNaN(app.vinput.value)){
         //launch download to version
-        //download()
-        if(os.arch() == 'ia32'){
-            url=app.buildpackages.versions[app.vinput.value][1];
-            lockapp.style.display="block";
-            getID('nwversion-dl').innerHTML=build.version;
-            download(url,'builder/bin/'+path.basename(url),function(err){
-                //Download end
-                lockapp.style.display="none";
-                if(err){
-                    return ;
-                }
-                exec('cd builder/bin/ && tar -zxf "'+path.basename(url)+'"',function(err,stderr,stdout){
-                    if(err){console.log(err);}
-                    if(stderr){console.log(stderr);}
-                    if(stdout){console.log(stdout);}
-                    showVersionsSelect();
-                    fs.removeSync("builder/bin/"+path.basename(url));
-                });
-            },function(prog){
-                //Download progress
-                dlprog.style.width=prog+"%";
+        v=app.buildpackages.versions[app.vinput.value];
+        dl=genDL(v,os.type(),os.arch());
+        lockapp.style.display="block";
+        getID('nwversion-dl').innerHTML=build.version;
+        download(dl,'builder/bin/'+path.basename(dl),function(err){
+            //Download end
+            lockapp.style.display="none";
+            dlprog.style.width="0%";
+            if(err){
+                return ;
+            }
+            exec('cd builder/bin/ && '+unpk_command(os.type())+' "'+path.basename(dl)+'"',function(err,stderr,stdout){
+                if(err){console.log(err);}
+                if(stderr){console.log(stderr);}
+                if(stdout){console.log(stdout);}
+                showVersionsSelect();
+                fs.removeSync("builder/bin/"+path.basename(dl));
             });
-        }else if(os.arch() == 'x64'){
-            url=app.buildpackages.versions[app.vinput.value][2]
-        }
+        },function(prog){
+            //Download progress
+            dlprog.style.width=prog+"%";
+        });
     }
 }
 //show versions available
@@ -242,22 +260,14 @@ function showVersionsSelect(){
     app.vinput.innerHTML="";
     app.vinput.innerHTML+="<option disabled selected>Select a version</option>";
     for(i=app.buildpackages.versions.length-1 ;i >= 0; i--){
-        if(fs.existsSync('builder/bin/'+app.buildpackages.versions[i][3])){
+        dirbin=path.basename(genDL(app.buildpackages.versions[i],os.type(),os.arch(),true));
+        if(fs.existsSync('builder/bin/'+dirbin)){
             colorbgst="style='background-color: #a5ffa1;'";
         }else{
             colorbgst="style='background-color: #ffa3a3;'";
         }
-        app.vinput.innerHTML+="<option "+colorbgst+" value='"+i+"'>"+app.buildpackages.versions[i][0]+"</option>";
+        app.vinput.innerHTML+="<option "+colorbgst+" value='"+i+"'>"+app.buildpackages.versions[i]+"</option>";
     }
-}
-function fvd(v){
-    for (var i = 0; i < app.buildpackages.versions.length; i++) {
-        if(app.buildpackages.versions[i][0] == v){
-            return app.buildpackages.versions[i][3];
-            break;
-        }
-    }
-    return false;
 }
 
 //Download function with progress
@@ -282,4 +292,33 @@ function download(url,dest,callback,onprog){
                 callback(err.message);
         });
     });
+}
+function genDL(v,p,a,offext){
+    sv=app.buildpackages.versions.indexOf(v) > app.buildpackages.versions.indexOf("v0.11.6");
+    if(sv){namep="nwjs";}else{namep="node-webkit";}
+    lc=p.toLowerCase();
+    if(lc=="linux"){pl="linux-"+a;ext=".tar.gz";}
+    if(lc=="darwin"){pl="osx-"+a;ext=".zip";}
+    if(lc=="win" && lc=="Windows_NT"){pl="win-"+a;ext=".zip";}
+    if(offext){return "http://dl.nwjs.io/"+v+"/"+namep+"-"+v+"-"+pl;}
+    return "http://dl.nwjs.io/"+v+"/"+namep+"-"+v+"-"+pl+ext;
+}
+function unpk_command(p){
+    lc=p.toLowerCase();
+    if(lc=="linux" || lc=="darwin"){command="tar -zxf ";}
+    if(lc=="darwin"){command="unzip ";}
+    if(lc=="win" || lc=="Windows_NT"){command="";}
+    return command;
+}
+function consoleAddMsg(data){
+    data=data.replace(/\n/g,'<br>');
+    _console.dom.innerHTML+="<span style='color: #555;'>"+data+"</span>";
+    _console.msgc++;
+    msgc.innerHTML=_console.msgc+" Messages";
+}
+function consoleAddErr(data){
+    data=data.replace(/\n/g,'<br>');
+    _console.dom.innerHTML+="<span style='color: #ff3a3a;'>"+data+"</span>";
+    _console.errc++;
+    errc.innerHTML=_console.errc+" Errors";
 }

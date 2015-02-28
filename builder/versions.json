@@ -1,17 +1,18 @@
 {
     "updated":"15/02/2015",
     "versions":[
-        ["v0.10.5","http://dl.nwjs.io/v0.10.5/node-webkit-v0.10.5-linux-ia32.tar.gz","http://dl.nwjs.io/v0.10.5/node-webkit-v0.10.5-linux-x64.tar.gz","node-webkit-v0.10.5-linux-ia32"],
-        ["v0.11.0-rc1","http://dl.nwjs.io/v0.11.0-rc1/node-webkit-v0.11.0-rc1-linux-ia32.tar.gz","http://dl.nwjs.io/v0.11.0-rc1/node-webkit-v0.11.0-rc1-linux-x64.tar.gz","node-webkit-v0.11.0-rc1-linux-ia32"],
-        ["v0.11.0","http://dl.nwjs.io/v0.11.0/node-webkit-v0.11.0-linux-ia32.tar.gz","http://dl.nwjs.io/v0.11.0/node-webkit-v0.11.0-linux-x64.tar.gz","node-webkit-v0.11.0-linux-ia32"],
-        ["v0.11.1","http://dl.nwjs.io/v0.11.1/node-webkit-v0.11.1-linux-ia32.tar.gz","http://dl.nwjs.io/v0.11.1/node-webkit-v0.11.1-linux-x64.tar.gz","node-webkit-v0.11.1-linux-ia32"],
-        ["v0.11.2","http://dl.nwjs.io/v0.11.2/node-webkit-v0.11.2-linux-ia32.tar.gz","http://dl.nwjs.io/v0.11.2/node-webkit-v0.11.2-linux-x64.tar.gz","node-webkit-v0.11.2-linux-ia32"],
-        ["v0.11.3","http://dl.nwjs.io/v0.11.3/node-webkit-v0.11.3-linux-ia32.tar.gz","http://dl.nwjs.io/v0.11.3/node-webkit-v0.11.3-linux-x64.tar.gz","node-webkit-v0.11.3-linux-ia32"],
-        ["v0.11.4","http://dl.nwjs.io/v0.11.4/node-webkit-v0.11.4-linux-ia32.tar.gz","http://dl.nwjs.io/v0.11.4/node-webkit-v0.11.4-linux-x64.tar.gz","node-webkit-v0.11.4-linux-ia32"],
-        ["v0.11.5","http://dl.nwjs.io/v0.11.5/node-webkit-v0.11.5-linux-ia32.tar.gz","http://dl.nwjs.io/v0.11.5/node-webkit-v0.11.5-linux-x64.tar.gz","node-webkit-v0.11.5-linux-ia32"],
-        ["v0.11.6","http://dl.nwjs.io/v0.11.6/node-webkit-v0.11.6-linux-ia32.tar.gz","http://dl.nwjs.io/v0.11.6/node-webkit-v0.11.6-linux-x64.tar.gz","node-webkit-v0.11.6-linux-ia32"],
-        ["v0.12.0-alpha1","http://dl.nwjs.io/v0.12.0-alpha1/nwjs-v0.12.0-alpha1-linux-ia32.tar.gz","http://dl.nwjs.io/v0.12.0-alpha1/nwjs-v0.12.0-alpha1-linux-x64.tar.gz","nwjs-v0.12.0-alpha1-linux-ia32"],
-        ["v0.12.0-alpha2","http://dl.nwjs.io/v0.12.0-alpha2/nwjs-v0.12.0-alpha2-linux-ia32.tar.gz","http://dl.nwjs.io/v0.12.0-alpha2/nwjs-v0.12.0-alpha2-linux-x64.tar.gz","nwjs-v0.12.0-alpha2-linux-ia32"],
-        ["v0.12.0-alpha3","http://dl.nwjs.io/v0.12.0-alpha3/nwjs-v0.12.0-alpha3-linux-ia32.tar.gz","http://dl.nwjs.io/v0.12.0-alpha3/nwjs-v0.12.0-alpha3-linux-x64.tar.gz","nwjs-v0.12.0-alpha3-linux-ia32"]
+        "v0.10.5",
+        "v0.11.0-rc1",
+        "v0.11.0",
+        "v0.11.1",
+        "v0.11.2",
+        "v0.11.3",
+        "v0.11.4",
+        "v0.11.5",
+        "v0.11.6",
+        "v0.12.0-alpha1",
+        "v0.12.0-alpha2",
+        "v0.12.0-alpha3",
+        "v0.12.0-rc1"
     ]
 }
