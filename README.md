@@ -9,7 +9,7 @@ Added new version v0.12.0-rc1
 
 Changed the structure versions.json
 
-Dialogos added in construction
+Dialogs added in construction
 
 Some elements of ui repaired
 
