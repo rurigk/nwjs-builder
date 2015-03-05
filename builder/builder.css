@@ -150,3 +150,8 @@ body{
     height: 100%;
     background-color: #0AD;
 }
+#params{
+    margin-left: 10px;
+    width: 50%;
+    color: #555;
+}

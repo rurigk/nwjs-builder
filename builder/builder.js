@@ -121,7 +121,7 @@ function runApp(v,pkg){
     dirbin=path.basename(genDL(build.version,os.type(),os.arch(),true));
     build.runing=true;
     updateState();
-    cxmd="builder/bin/"+dirbin+"/nw '"+app.workdir+"/'";
+    cxmd="builder/bin/"+dirbin+"/nw '"+app.workdir+"/' "+getID('params').value;
     _console.dom.innerHTML+="<span style='color: #2082ac;'>=======<br>Run app<br>=======<br><br>"+cxmd+"</span><br><br>";
     child=exec(cxmd);
     build.pids.push(child.pid);
@@ -212,6 +212,7 @@ function updateFields(){
     getID('pak-appversion').innerHTML=app.package.version;
     getID('pak-projectpath').innerHTML=app.workdir;
     getID('pak-targetdir').innerHTML=app.workdir+'/build/';
+    getID('params').value=(typeof app.package.params != "undefined")? app.package.params:"";
 }
 function updateState(){
     dirbin=path.basename(genDL(build.version,os.type(),os.arch(),true));
