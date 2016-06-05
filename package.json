@@ -1,25 +1,24 @@
 {
-    "main": "builder/index.html",
-    "name": "nwjsbuilder",
-    "description": "Build a nwjs project more easy",
-    "keywords": ["nw.js", "node-webkit", "builder"],
-    "version": "0.1.2",
-    "single-instance": true,
-    "window": {
-    "title": "nwjs builder",
-        "icon": "builder/nw-icon.png",
-        "position": "center",
-        "toolbar": false,
-        "frame": false,
-        "width": 1060,
-        "height": 660,
-        "min_width": 350,
-        "min_height": 114
-    },
-    "webkit":{
-        "plugin": false
-    },
-    "dependencies": {
-        "fs-extra": ">=0.16.2"
-    }
+	"main": "builder/index.html",
+	"name": "nwjsbuilder",
+	"description": "Build a nwjs project more easy",
+	"keywords": ["nw.js", "node-webkit", "builder"],
+	"version": "0.1.2",
+	"single-instance": true,
+	"window": {
+	"title": "nwjs builder",
+		"icon": "builder/nw-icon.png",
+		"position": "center",
+		"toolbar": false,
+		"frame": false,
+		"width": 1060,
+		"height": 660,
+		"min_width": 350,
+		"min_height": 114
+	},
+	"webkit":{
+		"plugin": false
+	},
+	"dependencies": {
+	}
 }
